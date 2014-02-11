@@ -5,13 +5,21 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(IPCBridgeGenerateMessages)
 
 find_package(IPC REQUIRED)
+if(NOT IPC_FOUND)
+  message(ERROR "ipc_bridge requires IPC to be installed")
+endif()
+
 find_package(Matlab REQUIRED COMPONENTS mex)
+if(NOT MATLAB_FOUND)
+  message(ERROR "ipc_bridge requires Matlab to be installed")
+endif()
+
 find_package(catkin REQUIRED roscpp)
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${IPC_INCLUDE_DIRS}
+  ${IPC_INCLUDE_DIR}
 )
 
 link_directories(

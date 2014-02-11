@@ -6,6 +6,7 @@ macro(generate_ipc_messages)
 
   set(IPC_MATLAB_CFLAGS
     ${IPC_MATLAB_CFLAGS}
+    "-I${IPC_INCLUDE_DIR}"
     "-I${CMAKE_INSTALL_PREFIX}/include"
     "-I${CMAKE_BINARY_DIR}/include")
 
