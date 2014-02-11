@@ -1,0 +1,11 @@
+set(ipc_bridge_INCLUDE_DIR @ipc_bridge_INCLUDE_DIR@)
+set(ipc_bridge_MODULE_PATH @ipc_bridge_MODULE_PATH@)
+set(ipc_bridge_FOUND TRUE)
+
+include(${CMAKE_CURRENT_LIST_DIR}/IPCBridgeGenerateMessages.cmake)
+
+mark_as_advanced (
+  ipc_bridge_FOUND
+  ipc_bridge_INCLUDE_DIR
+  ipc_bridge_MODULE_PATH
+  )

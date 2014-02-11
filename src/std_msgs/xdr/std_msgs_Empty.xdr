@@ -1,0 +1,14 @@
+struct std_msgs_Empty
+{
+   unsigned int nothing;
+};
+
+%{
+namespace ipc_bridge
+{
+    namespace std_msgs
+    {
+        typedef std_msgs_Empty Empty;
+    }
+}
+%}

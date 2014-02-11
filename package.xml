@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>ipc_bridge</name>
+  <version>0.0.0</version>
+  <description>The ipc_bridge package</description>
+
+  <maintainer email="nmichael@cmu.edu">Nathan Michael</maintainer>
+  <license>GPLv2</license>
+
+  <buildtool_depend>cmake</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+
+</package>

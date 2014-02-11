@@ -1,0 +1,68 @@
+%{
+#include <cstdio>
+#include <ipc_bridge/msgs/rosgraph_msgs_Header.h>
+#include <ipc_bridge/msgs/geometry_msgs_Point32.h>
+%}
+
+ipc_type rosgraph_msgs_Header;
+ipc_type geometry_msgs_Point32;
+
+struct sensor_msgs_PointCloud
+{
+ rosgraph_msgs_Header header;
+ unsigned int points_length;
+ geometry_msgs_Point32 points<>;
+%{
+  sensor_msgs_PointCloud() : points_length(0), points(0) {}
+  sensor_msgs_PointCloud(const sensor_msgs_PointCloud &msg) :
+    header(msg.header),
+    points_length(msg.points_length)
+  {
+    if (points != 0)
+      delete[] points;
+
+    points = 0;
+    if (points_length > 0)
+      {
+        points = new geometry_msgs_Point32[points_length];
+        memcpy((void*)points, (void*)msg.points,
+               points_length*sizeof(geometry_msgs_Point32));
+      }
+  }
+  ~sensor_msgs_PointCloud()
+  {
+    if (points != 0)
+      delete[] points;
+    points = 0;
+  }
+  sensor_msgs_PointCloud& operator= (const sensor_msgs_PointCloud& msg)
+  {
+    header = msg.header;
+    points_length = msg.points_length;
+
+    if (points != 0)
+      delete[] points;
+
+    points = 0;
+    if (points_length > 0)
+      {
+        points = new geometry_msgs_Point32[points_length];
+        memcpy((void*)points, (void*)msg.points,
+               points_length*sizeof(geometry_msgs_Point32));
+      }
+
+    return *this;
+  }
+%}
+};
+
+%{
+namespace ipc_bridge
+{
+    namespace sensor_msgs
+    {
+        typedef sensor_msgs_PointCloud PointCloud;
+    }
+}
+%}
+
