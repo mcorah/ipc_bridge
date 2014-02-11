@@ -21,11 +21,7 @@ catkin_make_isolated --install --pkg ipc_bridge
 
 ### Ubuntu:
 
-* An old FindMatlab.cmake file resides default in /usr/share/cmake-2.8/Modules. I moved this elsewhere so that the in package cmake file is used.
-* Matlab mex compilation outputs an error requiring '-fPIC' to be passed during IPC compilation. Appending to CFLAGS in ipc-3.9.1/etc/GNUmakefile.defs on line 371 works:
+* An old FindMatlab.cmake file resides in /usr/share/cmake-2.8/Modules. I moved this elsewhere so that the one distributed with the package is used. This step may be unnecessary.
+* Matlab mex compilation outputs an error requiring '-fPIC' to be passed during IPC compilation. Modify CFLAGS line 371 of ipc-3.9.1/etc/GNUmakefile.defs as follows:
 
-```                  $(CFLAGSM_$(DBMALLOC)) $(CFLAGS_EXT)```
-
-becomes
-
-```                  $(CFLAGSM_$(DBMALLOC)) $(CFLAGS_EXT) -fPIC```
+```$(CFLAGSM_$(DBMALLOC)) $(CFLAGS_EXT)``` -> ```$(CFLAGSM_$(DBMALLOC)) $(CFLAGS_EXT) -fPIC```
