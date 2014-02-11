@@ -17,6 +17,40 @@ wstool update -t src ipc_bridge
 catkin_make_isolated --install --pkg ipc_bridge
 ```
 
+### Local package messages:
+
+Given a ROS package with messages defined locally (e.g., in the example_package/msg folder), to add support:
++ Create the directory structure:
+```mkdir -p example_package/ipc/{mex,xdr,ros,include/ipc_bridge/matlab}```
++ Add the following to the example_package CMakeLists.txt file:
+```cmake
+find_package(ipc_bridge)
+if(ipc_bridge_FOUND)
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${ipc_bridge_MODULE_PATH}")
+  find_package(IPC REQUIRED)
+  find_package(Matlab REQUIRED COMPONENTS mex)
+  find_package(catkin REQUIRED roscpp)
+
+  include_directories(ipc_bridge_INCLUDE_DIR)
+
+  set(IPC_MATLAB_CFLAGS "-I${CMAKE_CURRENT_LIST_DIR}/ipc/include")
+  add_custom_target(generate_xdr_headers)
+  add_subdirectory("ipc")
+
+  install(DIRECTORY ipc/include/ipc_bridge/
+    DESTINATION include/ipc_bridge
+    FILES_MATCHING PATTERN "*.h"
+    PATTERN ".svn" EXCLUDE
+    )
+endif(ipc_bridge_FOUND)
+```
++ Add a file example_package/ipc/CMakeLists.txt that contains only ```generate_ipc_messages()```
++ Add the local content as follows:
+  * ipc/xdr: XDR serialization definition for ROS message
+  * ipc/ros: publisher,subscriber marshalling ROS <-> IPC
+  * ipc/mex: boilerplate mex implementation file
+  * ipc/include/ipc_bridge/matlab: MATLAB <-> IPC marshalling
+
 ## Installation Notes:
 
 ### Ubuntu:
