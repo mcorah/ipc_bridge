@@ -16,3 +16,16 @@ wstool set -t src ipc_bridge https://github.com/nmichael/ipc_bridge.git --git --
 wstool update -t src ipc_bridge
 catkin_make_isolated --install --pkg ipc_bridge
 ```
+
+## Installation Notes:
+
+### Ubuntu:
+
+* An old FindMatlab.cmake file resides default in /usr/share/cmake-2.8/Modules. I moved this elsewhere so that the in package cmake file is used.
+* Matlab mex compilation outputs an error requiring '-fPIC' to be passed during IPC compilation. Appending to CFLAGS in ipc-3.9.1/etc/GNUmakefile.defs on line 371 works:
+
+```                  $(CFLAGSM_$(DBMALLOC)) $(CFLAGS_EXT)```
+
+becomes
+
+```                  $(CFLAGSM_$(DBMALLOC)) $(CFLAGS_EXT) -fPIC```
