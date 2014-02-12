@@ -14,7 +14,7 @@ if(NOT MATLAB_FOUND)
   message(ERROR "ipc_bridge requires Matlab to be installed")
 endif()
 
-find_package(catkin REQUIRED roscpp)
+find_package(catkin REQUIRED COMPONENTS roscpp)
 
 include_directories(
   include
@@ -55,3 +55,5 @@ configure_file(ipc_bridge-config.cmake.in
 install(FILES
   "${PROJECT_BINARY_DIR}/InstallFiles/ipc_bridge-config.cmake"
   DESTINATION share/${PROJECT_NAME})
+
+install(FILES package.xml DESTINATION share/${PROJECT_NAME})
