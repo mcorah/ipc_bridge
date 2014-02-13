@@ -25,24 +25,30 @@ int main(int argc, char** argv)
   ros::NodeHandle n("~");
 
   std::string message_name;
-  n.param("message", message_name, std::string("message"));
+  if (!n.hasParam("message"))
+  {
+    ROS_ERROR("%s: missing required parameter 'message'",
+              ros::this_node::getName().c_str());
+    return EXIT_FAILURE;
+  }
+  n.getParam("message", message_name);
 
   pub = n.advertise<NAMESPACE::NAME>("topic", 100);
 
-  ipc_bridge::Subscriber<ipc_bridge::NAMESPACE::NAME> s(ros::this_node::getName(), 
+  ipc_bridge::Subscriber<ipc_bridge::NAMESPACE::NAME> s(ros::this_node::getName(),
                                                         message_name,
                                                         callback);
   if (s.Connect() != 0)
     {
-      ROS_ERROR("%s: failed to connect to message %s", 
-                ros::this_node::getName().c_str(), 
+      ROS_ERROR("%s: failed to connect to message %s",
+                ros::this_node::getName().c_str(),
                 message_name.c_str());
-      return -1;
+      return EXIT_FAILURE;
     }
   else
     {
-      ROS_DEBUG("%s: connected to message %s", 
-                ros::this_node::getName().c_str(), 
+      ROS_DEBUG("%s: connected to message %s",
+                ros::this_node::getName().c_str(),
                 message_name.c_str());
     }
 
@@ -51,5 +57,5 @@ int main(int argc, char** argv)
 
   s.Disconnect();
 
-  return 0;
+  return EXIT_SUCCESS;
 }

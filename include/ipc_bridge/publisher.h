@@ -25,7 +25,13 @@ int main(int argc, char** argv)
   ros::NodeHandle n("~");
 
   std::string message_name;
-  n.param("message", message_name, std::string("message"));
+  if (!n.hasParam("message"))
+  {
+    ROS_ERROR("%s: missing required parameter 'message'",
+              ros::this_node::getName().c_str());
+    return EXIT_FAILURE;
+  }
+  n.getParam("message", message_name);
 
   std::string server_name;
   n.param("server", server_name, std::string("localhost"));
@@ -42,7 +48,7 @@ int main(int argc, char** argv)
                 ros::this_node::getName().c_str(),
                 server_name.c_str(),
                 message_name.c_str());
-      return -1;
+      return EXIT_FAILURE;
     }
   else
     {
@@ -56,5 +62,5 @@ int main(int argc, char** argv)
 
   p->Disconnect();
 
-  return 0;
+  return EXIT_SUCCESS;
 }
