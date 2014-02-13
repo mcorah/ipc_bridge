@@ -31,7 +31,10 @@ if(ipc_bridge_FOUND)
   find_package(Matlab REQUIRED COMPONENTS mex)
   find_package(catkin REQUIRED roscpp)
 
-  include_directories(ipc_bridge_INCLUDE_DIR)
+  include_directories(
+    ${IPC_INCLUDE_DIR}
+    ${ipc_bridge_INCLUDE_DIR}
+  )
 
   set(IPC_MATLAB_CFLAGS "-I${CMAKE_CURRENT_LIST_DIR}/ipc/include")
   add_custom_target(generate_xdr_headers)
