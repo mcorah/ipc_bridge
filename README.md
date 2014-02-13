@@ -56,6 +56,20 @@ endif(ipc_bridge_FOUND)
 
 ## Installation Notes:
 
+### IPC:
+
+* IPC does not install to a specific location. A convention that works is to install as follows:
+```sh
+/opt/ipc/include/ipc.h
+/opt/ipc/bin/central
+/opt/ipc/bin/xdrgen
+/opt/ipc/lib/libipc.a
+```
+Don't forget to set your path:
+```sh
+export PATH=${PATH}:/opt/ipc/bin
+```
+
 ### Ubuntu:
 
 * An old FindMatlab.cmake file resides in /usr/share/cmake-2.8/Modules. I moved this elsewhere so that the one distributed with the package is used. This step may be unnecessary.
