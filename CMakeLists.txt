@@ -7,12 +7,12 @@ include(IPCBridgeGenerateMessages)
 find_package(IPC REQUIRED)
 if(NOT IPC_FOUND)
   message(ERROR "ipc_bridge requires IPC to be installed")
-endif()
+endif(NOT IPC_FOUND)
 
 find_package(Matlab REQUIRED COMPONENTS mex)
 if(NOT MATLAB_FOUND)
   message(ERROR "ipc_bridge requires Matlab to be installed")
-endif()
+endif(NOT MATLAB_FOUND)
 
 find_package(catkin REQUIRED COMPONENTS roscpp)
 

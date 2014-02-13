@@ -21,11 +21,18 @@ find_library (IPC_LIBRARIES ipc
   )
 
 ## -----------------------------------------------------------------------------
+## Check for xdrgen
+
+find_program (IPC_XDRGEN xdrgen
+  PATHS /usr/local/bin /usr/bin /bin /opt/ipc/bin /opt/local/bin
+  )
+
+## -----------------------------------------------------------------------------
 ## Actions taken when all components have been found
 
-if (IPC_INCLUDE_DIR AND IPC_LIBRARIES)
+if (IPC_INCLUDE_DIR AND IPC_LIBRARIES AND IPC_XDRGEN)
   set (IPC_FOUND TRUE)
-else (IPC_INCLUDE_DIR AND IPC_LIBRARIES)
+else (IPC_INCLUDE_DIR AND IPC_LIBRARIES AND IPC_XDRGEN)
   if (NOT IPC_FIND_QUIETLY)
     if (NOT IPC_INCLUDE_DIR)
       message (STATUS "Unable to find IPC header files!")
@@ -33,12 +40,16 @@ else (IPC_INCLUDE_DIR AND IPC_LIBRARIES)
     if (NOT IPC_LIBRARIES)
       message (STATUS "Unable to find IPC library files!")
     endif (NOT IPC_LIBRARIES)
+    if (NOT IPC_XDRGEN)
+      message (STATUS "Unable to find IPC xdrgen!")
+    endif (NOT IPC_XDRGEN)
   endif (NOT IPC_FIND_QUIETLY)
-endif (IPC_INCLUDE_DIR AND IPC_LIBRARIES)
+endif (IPC_INCLUDE_DIR AND IPC_LIBRARIES AND IPC_XDRGEN)
 
 if (IPC_FOUND)
   if (NOT IPC_FIND_QUIETLY)
     message (STATUS "Found components for IPC")
+    message (STATUS "IPC_XDRGEN = ${IPC_XDRGEN}")
     message (STATUS "IPC_INCLUDE_DIR = ${IPC_INCLUDE_DIR}")
     message (STATUS "IPC_LIBRARIES = ${IPC_LIBRARIES}")
   endif (NOT IPC_FIND_QUIETLY)
@@ -56,4 +67,5 @@ mark_as_advanced (
   IPC_FOUND
   IPC_LIBRARIES
   IPC_INCLUDE_DIR
+  IPC_XDRGEN
   )

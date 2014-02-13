@@ -18,7 +18,7 @@ macro(generate_ipc_messages)
     add_custom_command(OUTPUT ${xdr_header}
       COMMAND ${CMAKE_COMMAND}
       ARGS -E make_directory "${CMAKE_BINARY_DIR}/include/ipc_bridge/msgs"
-      COMMAND xdrgen
+      COMMAND ${IPC_XDRGEN}
       ARGS --directives=none ${CMAKE_CURRENT_SOURCE_DIR}/xdr/${MSG_NAME}.xdr ${xdr_header}
       COMMENT "Generating XDR: ${MSG_NAME}"
       VERBATIM
