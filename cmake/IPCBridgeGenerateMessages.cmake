@@ -49,7 +49,7 @@ macro(generate_ipc_messages)
   endforeach(NODE_SRC)
 
   if (NODE_TARGETS)
-    install(TARGETS ${NODE_TARGETS} RUNTIME DESTINATION bin)
+    install(TARGETS ${NODE_TARGETS} RUNTIME DESTINATION lib/ipc_bridge)
   endif(NODE_TARGETS)
 
   # Get the MEX nodes (assumes in mex directory residing with calling CMakeLists.txt)
