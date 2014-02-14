@@ -48,6 +48,12 @@ install(DIRECTORY cmake/
   PATTERN ".svn" EXCLUDE
   )
 
+install(DIRECTORY "matlab/+ipc_bridge"
+  DESTINATION share/${PROJECT_NAME}/matlab
+  FILES_MATCHING PATTERN "*.m"
+  PATTERN ".svn" EXCLUDE
+  )
+
 set(ipc_bridge_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include")
 set(ipc_bridge_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}")
 configure_file(ipc_bridge-config.cmake.in
