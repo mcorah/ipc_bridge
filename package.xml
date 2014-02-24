@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>ipc_bridge</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>The ipc_bridge package</description>
 
   <maintainer email="nmichael@cmu.edu">Nathan Michael</maintainer>

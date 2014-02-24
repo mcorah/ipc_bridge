@@ -2,8 +2,8 @@
 Changelog for package ipc_bridge
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2014-02-24)
+------------------
 * Correcting #ifdef identifiers not matching c++ specification. Closes issues `#2 <https://github.com/nmichael/ipc_bridge/issues/2>`_
 * Adding matlab interface
 * Removing default message parameter. Will now fail if not provided
