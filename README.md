@@ -9,7 +9,15 @@ ipc\_bridge is an interface between ROS and MATLAB via IPC.
 
 ## Installation:
 
-* Assuming a [dry](http://wiki.ros.org/catkin/migrating_from_rosbuild) workspace:
+* We must start with a [dry](http://wiki.ros.org/catkin/migrating_from_rosbuild) workspace (i.e., ```~/ws/dry```). If one does not exist:
+
+```sh
+mkdir -p ~/ws/dry
+cd ~/ws/dry
+wstool init src
+```
+
+* Install the ipc\_bridge package using wstool and catkin\_make\_isolated:
 ```sh
 cd ~/ws/dry
 wstool set -t src ipc_bridge https://github.com/nmichael/ipc_bridge.git --git --version=develop
