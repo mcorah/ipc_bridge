@@ -54,7 +54,7 @@ namespace ipc_bridge_matlab
 
         field = mxGetField(a, 0, "data");
 
-        int buflen = 128;
+        int buflen = mxGetN(field)+1;
         char buf[buflen];
         mxGetString(field, buf, buflen);
         if (strlen(buf) > 0)
