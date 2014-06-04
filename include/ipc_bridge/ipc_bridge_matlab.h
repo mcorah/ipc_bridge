@@ -83,7 +83,6 @@ namespace ipc_bridge_matlab
               void (*cleanup_handler_)(T&))
     {
       id_counter = 0;
-      message_time = -1;
 
       message_handler = message_handler_;
       array_handler = array_handler_;
@@ -228,10 +227,10 @@ namespace ipc_bridge_matlab
         {
           subscribers[id]->Listen(timeout);
 
-          if (fabs(msgs[id]->message_time - message_time) > 1e-6)
+          if (fabs(msgs[id]->message_time - message_times[id]) > 1e-6)
             {
               plhs[0] = message_handler(*(msgs[id]->message));
-              message_time = msgs[id]->message_time;
+              message_times[id] = msgs[id]->message_time;
             }
           else
             plhs[0] = mxCreateCellMatrix(1, 0);
@@ -280,6 +279,7 @@ namespace ipc_bridge_matlab
             new ipc_bridge::Subscriber<T>(module_name, message_name,
                                           Interface::MessageCallback,
                                           (void*)(msgs[id]));
+          message_times[id] = -1;
           subscribers[id] = sub;
           id_counter++;
           subscriber = true;
@@ -374,11 +374,11 @@ namespace ipc_bridge_matlab
     std::map<unsigned int, ipc_bridge::Subscriber<T>*> subscribers;
     std::map<unsigned int, ipc_bridge::Publisher<T>*> publishers;
     std::map<unsigned int, message_data_t*> msgs;
+    std::map<unsigned int, double> message_times;
 
     T outgoing_msg;
 
     unsigned int id_counter;
-    double message_time;
 
     mxArray* (*message_handler)(const T&);
     int (*array_handler)(const mxArray*, T&);
